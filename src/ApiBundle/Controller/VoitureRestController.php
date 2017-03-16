@@ -32,32 +32,15 @@ class VoitureRestController extends BaseController
   	$this->categorie = $request->query->get('categorie');
   	$this->nbPorte = $request->query->get('nbPorte');
   	$this->nbPassage = $request->query->get('nbPassage');
-  	
   	$this->token = $request->query->get('token');
   	
   	// Si token invalide : accès refusé
   	 $response = new Response();
   	 $response->setStatusCode(Response::HTTP_FORBIDDEN);
   	 if(!$this->isValid()) {
+  	 $response->setContent("Connexion refusee, veuillez vous authentifier avec un token valide");
   	 return $response;
   	 }
-  	  
-  	 // Test si des champs sont null : Bad request
-  	/* if($this->dateRetrait == null || $this->dateRetrait == "" || $this->dateRetour == null || $this->dateRetour == "" ||  $this->adresseRetrait == null || $this->adresseRetrait == "" || $this->adresseRetour == null || $this->adresseRetour == "" ){
-  	 $response->setStatusCode(Response::HTTP_BAD_REQUEST);
-  	 $response->setContent("Veuillez fournir : date de retrait, date de retour");
-  	 return $response;
-  	 }
-  	$dateRetrait = $this->createDate($this->dateRetrait);
-  	if(!$dateRetrait) {
-  		$response->setStatusCode(Response::HTTP_BAD_REQUEST);
-  		return $response;
-  	}
-  	$dateRetour = $this->createDate($this->dateRetour);
-  	if(!$dateRetour) {
-  		$response->setStatusCode(Response::HTTP_BAD_REQUEST);
-  		return $response;
-  	}*/
   	
   	$repository = $this->getDoctrine()->getRepository('ApiBundle:Voiture');
   	$query = $repository->createQueryBuilder('v');

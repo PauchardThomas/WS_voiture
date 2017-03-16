@@ -26,7 +26,6 @@ class BaseController extends Controller
 		$result = $query->getResult();
 		// Si le token n'existe pas
 		if(empty($result)) {
-			echo"Connexion refusee, veuillez vous authentifier avec un token valide";
 			return false;
 		}
 	
@@ -41,6 +40,11 @@ class BaseController extends Controller
 		}
 		return true;
 	}
+	/**
+	 * Format une date reçu en DateTime
+	 * @param string $date
+	 * @return boolean|\DateTime
+	 */
 	protected function createDate($date) {
 	
 		$dateformat = \DateTime::createFromFormat('j:m:Y:H:i',$date);
@@ -52,7 +56,7 @@ class BaseController extends Controller
 	
 	/**
 	 * Génération string random
-	 * @param unknown $length
+	 * @param string $length
 	 * @return string
 	 */
 	protected function generateString($length) {

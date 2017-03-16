@@ -61,7 +61,7 @@ class UserRestController extends BaseController
 		$this->username = $request->request->get('username');
 		$this->password = $request->request->get('password');
 	
-		$user = $this->_getUser();
+		$user = $this->getUserByIdentifiants();
 		$response = new Response();
 		if(empty($user)) {
 			$response->setStatusCode(Response::HTTP_FORBIDDEN);
@@ -112,8 +112,11 @@ class UserRestController extends BaseController
 	
 		return $user->getToken();
 	}
-	
-	private function _getUser() {
+	/**
+	 * Retourne un utilisateur en fonction de son username et password
+	 * @return User Utilisateur
+	 */
+	private function getUserByIdentifiants() {
 	
 		$em = $this->getDoctrine()->getManager();
 		$this->salt = $this->getUserSalt();
@@ -127,6 +130,10 @@ class UserRestController extends BaseController
 		return $result;
 	}
 	
+	/**
+	 * Récupère le salt de l'utilisateur
+	 * @return unknown
+	 */
 	private function getUserSalt() {
 		$em = $this->getDoctrine()->getManager();
 	

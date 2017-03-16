@@ -19,6 +19,11 @@ class ReservationRestController extends BaseController
 	private $adresseRetour;
 	private $numReservation;
 	
+	/**
+	 * Réalise une réservation
+	 * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\Response|string
+	 */
   public function postReservationAction(Request $request){
   	$response = new Response();
   	//** Récupération des paramètres **//
@@ -33,7 +38,14 @@ class ReservationRestController extends BaseController
    //** Test si la date de retrait est valide **//
   if(!$this->dateRetrait) {
   	$response->setStatusCode(Response::HTTP_BAD_REQUEST);
-  	$response->setContent("La date est mal renseignée ou manquante");
+  	$response->setContent("La date de retrait est mal renseignée ou manquante. format : jj:mm:yyyy:hh:mm");
+  	return $response;
+  }
+  
+  //** Test si la date de detour est valide **//
+  if(!$this->dateRetour) {
+  	$response->setStatusCode(Response::HTTP_BAD_REQUEST);
+  	$response->setContent("La date de retour est mal renseignée ou manquante. format : jj:mm:yyyy:hh:m");
   	return $response;
   }
    
@@ -42,6 +54,7 @@ class ReservationRestController extends BaseController
    $response = new Response();
    if(!$this->isValid()) {
    	$response->setStatusCode(Response::HTTP_FORBIDDEN);
+   	$response->setContent("Connexion refusee, veuillez vous authentifier avec un token valide");
    	return $response;
    }
    //** Test si id la voiture existe **//   
@@ -51,12 +64,13 @@ class ReservationRestController extends BaseController
    	return $response;
    }
    //** Si tout est OK => on valide la réservation + renvoie id de réservation **//
-   if($this->adresseRetrait == null || $this->adresseRetrait == "" || $this->adresseRetour == null || $this->adresseRetour == "" || $this->dateRetour == null || $this->dateRetour == ""  ) {
+   if($this->adresseRetrait == null || $this->adresseRetrait == "" || $this->adresseRetour == null || $this->adresseRetour == "" || $this->idVoiture =="" || $this->idVoiture == null) {
    	$response->setStatusCode(Response::HTTP_BAD_REQUEST);
-   	$response->setContent("Il manque des réservation pour assurer la réservation");
+   	$response->setContent("Il manque des éléments pour assurer la réservation");
    	return $response;
    }
    
+   // Création de la réservation
    $resa = new Reservation();
    $resa->setIdUser($this->idUser);
    $resa->setIdVoiture($this->idVoiture);
@@ -77,6 +91,7 @@ class ReservationRestController extends BaseController
    $em->persist($resaUser);
    $em->flush();
    
+   // Renvoie du numéro de réservation au client
    $obj = new \stdClass();
    $obj->numeroReservation=$numResa;
    return json_encode($obj);
@@ -90,6 +105,7 @@ class ReservationRestController extends BaseController
   	// Si token invalide : accès refusé
   	$response = new Response();
   	if(!$this->isValid()) {
+  		$response->setContent("Connexion refusee, veuillez vous authentifier avec un token valide");
   		$response->setStatusCode(Response::HTTP_FORBIDDEN);
   		return $response;
   	}
@@ -99,6 +115,11 @@ class ReservationRestController extends BaseController
   	return $UserReservations;
   }
   
+  /**
+   * Récupère les informations d'une réservation
+   * @param Request $request
+   * @return \Symfony\Component\HttpFoundation\Response|unknown
+   */
   public function getReservationInfoAction(Request $request) {
   	
   	$this->token = $request->query->get('token');
@@ -109,6 +130,7 @@ class ReservationRestController extends BaseController
   	$response = new Response();
   	if(!$this->isValid()) {
   		$response->setStatusCode(Response::HTTP_FORBIDDEN);
+  		$response->setContent("Connexion refusee, veuillez vous authentifier avec un token valide");
   		return $response;
   	}
   	
