@@ -100,4 +100,48 @@ class VoitureRestController extends BaseController
   	return $voitures;
   	
   }
+  
+  public function getTestAction() {
+  	
+  	//*************   CURL GET  *********************//
+  	$url = '';
+  	$api_key ='';
+  	$url_final = $url.$api_key;
+  	
+  	$ch = curl_init();
+  	
+  	curl_setopt($ch, CURLOPT_URL, $url);
+  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  	$response = curl_exec ($ch);
+  	curl_close ($ch);
+  	
+  	return $response;
+  	
+  	//*************   CURL POST  *********************//
+  	//extract data from the post
+  	//set POST variables
+  	$url = '';
+  	
+  	// set post fields
+  	$post = [
+  			'username' => 'user12',
+  			'password' => 'passuser1',
+  	];
+  	
+  	$ch = curl_init($url);
+  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+  	// execute!
+  	$response = curl_exec($ch);
+  	
+  	// close the connection, release resources used
+  	curl_close($ch);
+  	
+  	// do anything you want with your response
+  	 
+  	return $response;
+  
+  	
+  }
 }
