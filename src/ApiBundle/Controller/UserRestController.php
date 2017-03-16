@@ -5,6 +5,7 @@ namespace ApiBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use ApiBundle\Entity\User;
 
 class UserRestController extends BaseController
@@ -23,6 +24,13 @@ class UserRestController extends BaseController
 	 * Enregistrement d'un utilisateur
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response|string
+	 * @ApiDoc(
+	 *    description="Permet de s'inscrire",
+	 *    requirements={
+	 *      {"name"="username", "requirement"="obligatory", "dataType"="string"},
+	 *      {"name"="password","requirement"="obligatory", "dataType"="string"}
+	 * 	}
+	 * )
 	 */
 	public function postRegisterAction(Request $request)
 	{
@@ -55,6 +63,13 @@ class UserRestController extends BaseController
 	 * Connexion d'un utilisateur
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response|string
+	 * @ApiDoc(
+	 *    description="Permet de ce connecter",
+	 *    requirements={
+	 *      {"name"="username", "requirement"="obligatory", "dataType"="string"},
+	 *      {"name"="password","requirement"="obligatory", "dataType"="string"}
+	 * 	}
+	 * )
 	 */
 	public function postLoginAction(Request $request)
 	{

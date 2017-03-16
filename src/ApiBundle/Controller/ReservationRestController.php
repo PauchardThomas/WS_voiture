@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use ApiBundle\Entity\Reservation;
 use ApiBundle\Entity\ReservationUser;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class ReservationRestController extends BaseController
 {
@@ -20,6 +21,18 @@ class ReservationRestController extends BaseController
 	private $numReservation;
 	
 	/**
+   * @ApiDoc(
+   *    description="Permet de réserver une voiture",
+   *    requirements={
+   *      {"name"="token", "requirement"="obligatory", "dataType"="string"},
+   *      {"name"="idVoiture","requirement"="obligatory", "dataType"="integer"},
+   *      {"name"="adresseRetour","requirement"="obligatory", "dataType"="string"},
+   *      {"name"="adresseRetrait","requirement"="obligatory", "dataType"="string"},
+   *      {"name"="dateRetour","requirement"="obligatory", "dataType"="datetime","description"="jj:mm:aaaa:hh:mm Exemple : 02:12:2017:10:30"},
+   *      {"name"="dateRetrait","requirement"="obligatory", "dataType"="datetime","description"="jj:mm:aaaa:hh:mm Exemple : 04:12:2017:19:00"}
+   *  }
+   * )
+  *
 	 * Réalise une réservation
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response|string
@@ -97,6 +110,14 @@ class ReservationRestController extends BaseController
    return json_encode($obj);
   }
   
+  /**
+   * @ApiDoc(
+   *    description="Permet de consulter sa réservation",
+   *    requirements={
+   *      {"name"="token", "requirement"="obligatory", "dataType"="string"}
+   *  }
+   * )
+   */
   public function getReservationMesreservationAction(Request $request) {
   	
   	$this->token = $request->query->get('token');
@@ -116,6 +137,13 @@ class ReservationRestController extends BaseController
   }
   
   /**
+   * @ApiDoc(
+   *    description="Permet de consulter les informations de ma réservation",
+   *    requirements={
+   *      {"name"="token", "requirement"="obligatory", "dataType"="string"},
+   *      {"name"="numeroReservation", "requirement"="obligatory", "dataType"="string"}
+   *  }
+   * )
    * Récupère les informations d'une réservation
    * @param Request $request
    * @return \Symfony\Component\HttpFoundation\Response|unknown

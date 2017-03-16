@@ -3,10 +3,12 @@
 namespace ApiBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\Prefix;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class VoitureRestController extends BaseController
 {
@@ -22,6 +24,22 @@ class VoitureRestController extends BaseController
 	private $nbPorte;
 	private $nbPassage;
 	
+	/**
+	 * 
+	 * @ApiDoc(
+	 *    description="Permet de consulter la liste des voiture",
+	 *    requirements={
+	 *      {"name"="token","requirement"="obligatory", "dataType"="string"},
+	 *      {"name"="marque", "requirement"="nonobligatory", "dataType"="string"},
+	 *      {"name"="modele","requirement"="nonobligatory", "dataType"="string"},
+	 *      {"name"="clim","requirement"="nonobligatory", "dataType"="string","description"="0 : non | 1 : oui"},
+	 *      {"name"="boite","requirement"="nonobligatory", "dataType"="string","description"="manuelle | automatique"},
+	 *      {"name"="categorie","requirement"="nonobligatory", "dataType"="string"},
+	 *      {"name"="nbPorte","requirement"="nonobligatory", "dataType"="string"},
+	 *      {"name"="nbPassage","requirement"="nonobligatory", "dataType"="string"},
+	 *  }
+	 * )
+	 */
   public function getVoitureAction(Request $request){
    
 
