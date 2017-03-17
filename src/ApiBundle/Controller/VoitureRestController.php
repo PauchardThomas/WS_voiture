@@ -27,7 +27,8 @@ class VoitureRestController extends BaseController
 	/**
 	 * 
 	 * @ApiDoc(
-	 *    description="Permet de consulter la liste des voiture",
+	 * 	  resource="/api/voiture",
+	 *    description="Permet de consulter la liste des voitures",
 	 *    requirements={
 	 *      {"name"="token","requirement"="obligatory", "dataType"="string"},
 	 *      {"name"="marque", "requirement"="nonobligatory", "dataType"="string"},
@@ -37,7 +38,14 @@ class VoitureRestController extends BaseController
 	 *      {"name"="categorie","requirement"="nonobligatory", "dataType"="string"},
 	 *      {"name"="nbPorte","requirement"="nonobligatory", "dataType"="string"},
 	 *      {"name"="nbPassage","requirement"="nonobligatory", "dataType"="string"},
-	 *  }
+	 *  },
+   *  statusCodes={
+   *  	200 = "Successfull",
+   *  	403 = "Forbidden | Connexion refusée, token invalide"
+   *  },
+   *  output={
+        "class"   = "ApiBundle\Entity\Voiture"
+    }
 	 * )
 	 */
   public function getVoitureAction(Request $request){

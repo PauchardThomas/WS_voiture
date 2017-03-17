@@ -25,27 +25,43 @@ class UserRestController extends BaseController
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response|string
 	 * @ApiDoc(
+	 * 	  resource="/api/users",
 	 *    description="Permet de s'inscrire",
 	 *    requirements={
 	 *      {"name"="username", "requirement"="obligatory", "dataType"="string"},
 	 *      {"name"="password","requirement"="obligatory", "dataType"="string"}
-	 * 	}
+	 * 	},
+   *  statusCodes={
+   *  	200 = "Successfull",
+   *  	400 = "Bad request | Username ou Password null ou vide",
+   *    406 = "Not acceptable | Username already exist"
+   *  },
+   *  output={
+        "class"   = "ApiBundle\Entity\User",
+        "groups"={"registration"}
+        
+    }
 	 * )
 	 */
-	public function postRegisterAction(Request $request)
+	public function postUsersRegisterAction(Request $request)
 	{
 		$this->username = $request->request->get('username');
 		$this->password = $request->request->get('password');
 	
 		$response = new Response();
-	
+		
+		if($this->username == "" || $this->username == null) {
+			$response->setStatusCode(Response::HTTP_BAD_REQUEST);
+			$response->setContent("Username null");
+			return $response;
+		}
 		// Test les paramètres reçus
 		if(!$this->isUsernameAvailable()){
 			$response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
 			$response->setContent("Username already exist");
 			return $response;
 		}else if ($this->password == "" || $this->password == null) {
-			$response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+			$response->setStatusCode(Response::HTTP_BAD_REQUEST);
 			$response->setContent("Password null");
 			return $response;
 		}
@@ -64,14 +80,24 @@ class UserRestController extends BaseController
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response|string
 	 * @ApiDoc(
+	 * 	  resource="/api/users",
 	 *    description="Permet de ce connecter",
 	 *    requirements={
 	 *      {"name"="username", "requirement"="obligatory", "dataType"="string"},
 	 *      {"name"="password","requirement"="obligatory", "dataType"="string"}
-	 * 	}
+	 * 	},
+   *  statusCodes={
+   *  	200 = "Successfull",
+   *  	403 = "Forbidden | L'utilisateur n'existe pas"
+   *  },
+   *  output={
+        "class"   = "ApiBundle\Entity\User",
+        "groups"={"registration"}
+        
+    }
 	 * )
 	 */
-	public function postLoginAction(Request $request)
+	public function postUsersLoginAction(Request $request)
 	{
 		$this->username = $request->request->get('username');
 		$this->password = $request->request->get('password');

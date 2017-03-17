@@ -3,6 +3,7 @@
 namespace ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Reservation
@@ -30,42 +31,42 @@ class Reservation
 
     /**
      * @var int
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="idVoiture", type="integer")
      */
     private $idVoiture;
 
     /**
      * @var \DateTime
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="dateDebutRes", type="datetime")
      */
     private $dateDebutRes;
 
     /**
      * @var \DateTime
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="dateFinRes", type="datetime")
      */
     private $dateFinRes;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="lieuRetrait", type="string", length=255)
      */
     private $lieuRetrait;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="lieuRetour", type="string", length=255)
      */
     private $lieuRetour;
 
      /**
      * @var string
-     *
+     * @JMS\Groups({ "resa","infos" })
      * @ORM\Column(name="numReservation", type="string", length=255)
      */
     private $numReservation;

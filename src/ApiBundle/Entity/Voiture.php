@@ -3,6 +3,7 @@
 namespace ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Voiture
@@ -18,54 +19,56 @@ class Voiture
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"infos" })
      */
     private $id;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="prix", type="decimal", precision=10, scale=0)
      */
     private $prix;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="description", type="string", length=255)
+     * @JMS\Groups({"infos" })
      */
     private $description;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="boite", type="string", length=255)
      */
     private $boite;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="clim", type="boolean")
      */
     private $clim;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="marque", type="string", length=255)
      */
     private $marque;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="categorie", type="string", length=255)
      */
     private $categorie;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="modele", type="string", length=255)
      */
     private $modele;
@@ -100,14 +103,14 @@ class Voiture
 
     /**
      * @var int
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="nbPorte", type="integer")
      */
     private $nbPorte;
 
     /**
      * @var int
-     *
+     * @JMS\Groups({"infos" })
      * @ORM\Column(name="nbPassage", type="integer")
      */
     private $nbPassage;

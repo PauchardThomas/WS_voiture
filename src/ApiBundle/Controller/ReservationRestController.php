@@ -22,7 +22,8 @@ class ReservationRestController extends BaseController
 	
 	/**
    * @ApiDoc(
-   *    description="Permet de réserver une voiture",
+   * 	resource="/api/reservation",
+   *    description="Permet de reserver une voiture",
    *    requirements={
    *      {"name"="token", "requirement"="obligatory", "dataType"="string"},
    *      {"name"="idVoiture","requirement"="obligatory", "dataType"="integer"},
@@ -30,7 +31,16 @@ class ReservationRestController extends BaseController
    *      {"name"="adresseRetrait","requirement"="obligatory", "dataType"="string"},
    *      {"name"="dateRetour","requirement"="obligatory", "dataType"="datetime","description"="jj:mm:aaaa:hh:mm Exemple : 02:12:2017:10:30"},
    *      {"name"="dateRetrait","requirement"="obligatory", "dataType"="datetime","description"="jj:mm:aaaa:hh:mm Exemple : 04:12:2017:19:00"}
-   *  }
+   *  },
+   *  statusCodes={
+   *  	200 = "Successfull",
+   *  	400 = "Bad request | Certains champs sont manquants ou les dates sont mals renseignées",
+   *  	403 = "Forbidden | Connexion refusé, token invalide | Voiture invalide"
+   *  },
+   *  output={
+        "class"   = "ApiBundle\Entity\Reservation",
+        "groups"={"resa"}
+    }
    * )
   *
 	 * Réalise une réservation
@@ -112,13 +122,22 @@ class ReservationRestController extends BaseController
   
   /**
    * @ApiDoc(
-   *    description="Permet de consulter sa réservation",
+   * 	resource="/api/reservation",
+   *    description="Permet de consulter la liste de ses reservations",
    *    requirements={
    *      {"name"="token", "requirement"="obligatory", "dataType"="string"}
-   *  }
+   *  },
+   *  statusCodes={
+   *  	200 = "Successfull",
+   *  	403 = "Forbidden | Connexion refusée, token invalide"
+   *  },
+   *  output={
+        "class"   = "ApiBundle\Entity\Reservation",
+        "groups"={"resa"}
+    }
    * )
    */
-  public function getReservationMesreservationAction(Request $request) {
+  public function getReservationMesreservationsAction(Request $request) {
   	
   	$this->token = $request->query->get('token');
   	
@@ -138,11 +157,20 @@ class ReservationRestController extends BaseController
   
   /**
    * @ApiDoc(
-   *    description="Permet de consulter les informations de ma réservation",
+   * 	resource ="/api/reservation",
+   *    description="Permet de consulter les informations de sa reservation",
    *    requirements={
    *      {"name"="token", "requirement"="obligatory", "dataType"="string"},
    *      {"name"="numeroReservation", "requirement"="obligatory", "dataType"="string"}
-   *  }
+   *  },
+   *  statusCodes={
+   *  	200 = "Successfull",
+   *  	403 = "Forbidden | Connexion refusée, token invalide"
+   *  },
+   *  output={
+        "class"   = "ApiBundle\Entity\Reservation",
+        "groups"={"infos"}
+    }
    * )
    * Récupère les informations d'une réservation
    * @param Request $request

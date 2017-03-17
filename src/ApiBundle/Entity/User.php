@@ -3,6 +3,7 @@
 namespace ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * User
@@ -37,7 +38,7 @@ class User
 
     /**
      * @var string
-     *
+     * @JMS\Groups({ "registration" })
      * @ORM\Column(name="token", type="string", length=255)
      */
     private $token;
