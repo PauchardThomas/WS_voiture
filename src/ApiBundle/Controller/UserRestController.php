@@ -68,11 +68,9 @@ class UserRestController extends BaseController
 	
 		// Création de l'utilisateur
 		$token = $this->createUser();
-	
-		$obj = new \stdClass();
-		$obj->token=$token;
-	
-		return json_encode($obj);
+
+		$t = array("token" => $token);
+		return  $t;
 	
 	}
 	/**
@@ -109,11 +107,24 @@ class UserRestController extends BaseController
 			return $response;
 		}
 		$token = $user[0]["token"];
+		
+		$u = $this->getUserById($user[0]["id"]);
+		$this->token = $token;
+
+		// Regénère un nouveau token.
+		if(!$this->isValid()) {
+			$u->setDateToken(new \DateTime(date('Y-m-d H:i:s')));
+			$u->setToken($this->generateString(40));
+			
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($u);
+			$em->flush();
+			
+			$token = $u->getToken();
+		}
 	
-		$obj = new \stdClass();
-		$obj->token=$token;
-	
-		return json_encode($obj);
+		$t = array("token" => $token);
+		return $t;
 	}
 	
 	/**
@@ -130,6 +141,15 @@ class UserRestController extends BaseController
 			return true;
 		}
 		return false;
+	}
+	private function getUserById($id) {
+		$repository = $this
+		->getDoctrine()
+		->getManager()
+		->getRepository('ApiBundle:User')
+		;
+		
+		return $repository->find($id);
 	}
 	/**
 	 * Création d'un utilisateur

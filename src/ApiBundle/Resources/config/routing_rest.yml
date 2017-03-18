@@ -12,3 +12,7 @@ reservation :
   type: rest
   resource:     "ApiBundle:ReservationRest"
   name_prefix:  api_
+reservation_hotel : 
+  type: rest
+  resource:     "ApiBundle:ReservationHotelRest"
+  name_prefix:  api_

@@ -187,5 +187,10 @@ class User
     {
         return $this->salt;
     }
+    public function __construct(Array $properties=array()){
+    	foreach($properties as $key => $value){
+    		$this->{$key} = $value;
+    	}
+    }
 }
 

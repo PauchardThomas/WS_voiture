@@ -13,8 +13,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class ReservationRestController extends BaseController
 {
-	private $dateRetrait;
-	private $idVoiture;
 	private $dateRetour;
 	private $adresseRetrait;
 	private $adresseRetour;
@@ -47,7 +45,7 @@ class ReservationRestController extends BaseController
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response|string
 	 */
-  public function postReservationAction(Request $request){
+  public function postReservationVoitureAction(Request $request){
   	$response = new Response();
   	//** Récupération des paramètres **//
    $this->token = $request->request->get('token');
@@ -158,7 +156,7 @@ class ReservationRestController extends BaseController
   /**
    * @ApiDoc(
    * 	resource ="/api/reservation",
-   *    description="Permet de consulter les informations de sa reservation",
+   *    description="Permet de consulter les informations d'une reservation",
    *    requirements={
    *      {"name"="token", "requirement"="obligatory", "dataType"="string"},
    *      {"name"="numeroReservation", "requirement"="obligatory", "dataType"="string"}
@@ -206,33 +204,6 @@ class ReservationRestController extends BaseController
   	// Si la voiture n'existe pas
   	if(empty($result)) {
   		return false;
-  	}
-  	return true;
-  }
-  /**
-   * Récupère la voiture recherché parmis toutes les réservations
-   */
-  private function isVoitureDispo() {
-  	$em = $this->getDoctrine()->getManager();
-  	$query = $em->createQuery('SELECT r.dateDebutRes , r.dateFinRes FROM ApiBundle:Reservation r WHERE r.idVoiture = :idVoiture')
-  	->setParameter('idVoiture', $this->idVoiture);
-  	
-  	$result = $query->getResult();
-  	// Si il n'y a pas de réservation
-  	if(empty($result)) {
-  		echo"pas de result";
-  		return true;
-  	}
-  	
-  	foreach ($result as $key => $reservation){
-  		//commandes
-  		$datedeb = $reservation["dateDebutRes"]->format('Y-m-d H:i:s');
-  		$datefin = $reservation["dateFinRes"]->format('Y-m-d H:i:s');
-  		$dateretrait = $this->dateRetrait->format('Y-m-d H:i:s');
-  		//echo "\r\n" .$datedeb ."||". $dateretrait ."||". $datefin;
-  		if($datedeb <= $dateretrait && $dateretrait <= $datefin) {
-  			return false;
-  		}
   	}
   	return true;
   }
