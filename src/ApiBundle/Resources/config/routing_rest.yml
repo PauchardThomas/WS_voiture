@@ -14,5 +14,9 @@ reservation :
   name_prefix:  api_
 reservation_hotel : 
   type: rest
-  resource:     "ApiBundle:ReservationHotelRest"
+  resource:     "ApiBundle:HotelRest"
+  name_prefix:  api_
+avion : 
+  type: rest
+  resource:     "ApiBundle:VolRest"
   name_prefix:  api_

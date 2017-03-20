@@ -20,15 +20,15 @@ class ReservationRestController extends BaseController
 	
 	/**
    * @ApiDoc(
-   * 	resource="/api/reservation",
+   * 	resource="/api/reservations",
    *    description="Permet de reserver une voiture",
    *    requirements={
    *      {"name"="token", "requirement"="obligatory", "dataType"="string"},
    *      {"name"="idVoiture","requirement"="obligatory", "dataType"="integer"},
    *      {"name"="adresseRetour","requirement"="obligatory", "dataType"="string"},
    *      {"name"="adresseRetrait","requirement"="obligatory", "dataType"="string"},
-   *      {"name"="dateRetour","requirement"="obligatory", "dataType"="datetime","description"="jj:mm:aaaa:hh:mm Exemple : 02:12:2017:10:30"},
-   *      {"name"="dateRetrait","requirement"="obligatory", "dataType"="datetime","description"="jj:mm:aaaa:hh:mm Exemple : 04:12:2017:19:00"}
+   *      {"name"="dateRetour","requirement"="obligatory", "dataType"="string","description"="jj:mm:aaaa:hh:mm Exemple : 02:12:2017:10:30"},
+   *      {"name"="dateRetrait","requirement"="obligatory", "dataType"="string","description"="jj:mm:aaaa:hh:mm Exemple : 04:12:2017:19:00"}
    *  },
    *  statusCodes={
    *  	200 = "Successfull",
